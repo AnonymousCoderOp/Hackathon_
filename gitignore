@@ -1,0 +1,7 @@
+.env
+__pycache__/
+*.mp3
+*.wav
+*.mpeg
+!BGM*.mp3
+!BGM*.mpeg
