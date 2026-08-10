@@ -11,9 +11,7 @@ from groq import Groq
 from pydub import AudioSegment
 from dotenv import load_dotenv
 
-# ---------------------------------------------------------------------------
-# Setup
-# ---------------------------------------------------------------------------
+
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 RIME_API_KEY = os.getenv("RIME_API_KEY")
@@ -25,18 +23,13 @@ client = Groq(api_key=GROQ_API_KEY)
 
 BASE_DIR = Path(__file__).parent
 
-# backgroundMusicId -> bundled track on disk (matches the two tracks the
-# frontend already embeds client-side for the "Low Tide" / "Night Drive"
-# backdrop cards; swap these two lines if your naming is reversed).
+
 BGM_TRACKS = {
     "low-tide": BASE_DIR / "BGM2.mp3",
     "night-drive": BASE_DIR / "BGM.mpeg",
 }
 
-# Voice ids the frontend sends -> Rime speaker ids. main.py previously
-# hardcoded "cove"; this just passes the selected voice straight through.
-# Adjust the right-hand side if your Rime account uses different speaker
-# names for these four options.
+
 VOICE_MAP = {
     "cove": "cove",
     "astra": "astra",
@@ -48,9 +41,7 @@ PREVIEW_TEXT = "Hey — this is what I sound like. Let's make something together
 
 app = FastAPI(title="melodi.ai backend")
 
-# CORS must be enabled for whatever origin serves the frontend (per README).
-# Wide open here since this is a local/dev generation server; tighten
-# allow_origins if you deploy this somewhere public.
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -60,9 +51,7 @@ app.add_middleware(
 )
 
 
-# ---------------------------------------------------------------------------
-# Core generation logic (ported from the original main.py)
-# ---------------------------------------------------------------------------
+
 def generate_lyrics(mood: str, genre: str, topic: str) -> str:
     prompt = f"""Write a rhythmic, emotional spoken-word poem with these details:
 Mood: {mood}
@@ -153,9 +142,7 @@ def mix_with_backdrop(voice_bytes: bytes, backdrop_id: str, custom_file_bytes):
     return out.getvalue()
 
 
-# ---------------------------------------------------------------------------
-# Routes
-# ---------------------------------------------------------------------------
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
