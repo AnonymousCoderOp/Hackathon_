@@ -142,7 +142,9 @@ def mix_with_backdrop(voice_bytes: bytes, backdrop_id: str, custom_file_bytes):
     return out.getvalue()
 
 
-
+@app.get("/")
+async def serve_frontend():
+    return FileResponse(BASE_DIR / "index.html")
 @app.get("/health")
 def health():
     return {"status": "ok"}
