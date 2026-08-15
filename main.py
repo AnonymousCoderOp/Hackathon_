@@ -6,7 +6,7 @@ from pathlib import Path
 import requests
 from fastapi import FastAPI, UploadFile, File, Form, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, Response
+from fastapi.responses import JSONResponse, Response, FileResponse
 from groq import Groq
 from pydub import AudioSegment
 from dotenv import load_dotenv
